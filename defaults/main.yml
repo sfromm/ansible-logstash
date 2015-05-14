@@ -1,0 +1,31 @@
+---
+logstash_user: logstash
+logstash_version: 1.4
+logstash_nofile: 16384
+#
+# paths
+logstash_path_home: /opt/logstash
+logstash_path_conf: /etc/logstash/conf.d
+logstash_path_logs: /var/log/logstash
+logstash_path_data: /var/lib/logstash
+#
+# java
+logstash_java_heap_size: 256m
+logstash_java_opts: "-Djava.io.tmpdir=${LS_HOME}"
+#
+# configuration
+logstash_inputs: |-
+    file {
+      path => [ "/var/log/messages" ],
+      type => "syslog"
+    }
+logstash_filters: |-
+    if [type] == "syslog" {
+      grok { match => { message => "%SYSLOGBASE" } }
+      date { match => [ "timestamp", "MMM dd HH:mm:ss" ] }
+    }
+logstash_outputs: |-
+    elasticsearch {
+      host => "localhost"
+    }
+logstash_patterns: [ ]

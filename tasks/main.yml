@@ -1,0 +1,41 @@
+---
+- name: include os-specific variables
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- include: setup-redhat.yml
+  when: ansible_os_family == "RedHat"
+
+- name: template logstash defaults
+  template: >-
+    src=logstash.j2
+    dest={{ logstash_defaults_path }}
+    owner=root
+    group=root
+    mode=0644
+  notify: restart logstash
+
+- name: template logstash configuration files
+  template: >-
+    src={{ item.name }}.j2
+    dest={{ logstash_path_conf }}/{{ item.rank }}-{{ item.name }}
+    owner=root
+    group=root
+    mode=0644
+  notify: restart logstash
+  with_items:
+    - { rank: 10, name: inputs.conf }
+    - { rank: 30, name: filters.conf }
+    - { rank: 50, name: outputs.conf }
+
+- name: template logstash patterns
+  template: >-
+    src=pattern.j2
+    dest={{ logstash_path_home }}/patterns/{{ item.name }}
+    owner=root
+    group=root
+    mode=0644
+  notify: restart logstash
+  with_items: logstash_patterns
+
+- name: enable and start logstash
+  service: name=logstash enabled=yes state=started

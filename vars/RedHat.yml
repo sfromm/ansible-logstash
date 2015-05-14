@@ -1,0 +1,5 @@
+---
+logstash_prereqs:
+    - java-1.7.0-openjdk
+logstash_rpm_gpg_key: http://packages.elasticsearch.org/GPG-KEY-elasticsearch
+logstash_defaults_path: /etc/sysconfig/logstash
