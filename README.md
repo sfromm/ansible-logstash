@@ -48,7 +48,7 @@ logstash_filters: |-
     if [type] == "syslog" {
       grok { match => { message => "%SYSLOGBASE" } }
       date { match => [ "timestamp", "MMM dd HH:mm:ss" ] }
-      }
+    }
 ```
 - **logstash_outputs**: A yaml scalar that defines the outputs for
   *logstash*.  Defaults to:
@@ -56,7 +56,7 @@ logstash_filters: |-
 logstash_outputs: |-
     elasticsearch {
       host => "localhost"
-      }
+    }
 ```
 - **logstash_patterns**:  A list of dictionaries, where the keys are
   *name* and *pattern*.  This defaults to an empty list.  An example
