@@ -16,7 +16,7 @@ logstash_java_opts: "-Djava.io.tmpdir=${LS_HOME}"
 # configuration
 logstash_inputs: |-
     file {
-      path => [ "/var/log/messages" ],
+      path => [ "/var/log/messages" ]
       type => "syslog"
     }
 logstash_filters: |-

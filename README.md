@@ -37,7 +37,7 @@ on how to configure logstash.  If building patterns for grok, the
 ```
 logstash_inputs: |-
     file {
-      path => [ "/var/log/messages" ],
+      path => [ "/var/log/messages" ]
       type => "syslog"
     }
 ```
