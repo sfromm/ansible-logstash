@@ -35,7 +35,7 @@
     group=root
     mode=0644
   notify: restart logstash
-  with_items: logstash_patterns
+  with_items: "{{ logstash_patterns }}"
 
 - name: enable and start logstash
   service: name=logstash enabled=yes state=started
