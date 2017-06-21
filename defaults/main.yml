@@ -1,6 +1,6 @@
 ---
 logstash_user: logstash
-logstash_version: 1.4
+logstash_major_version: 5.x
 logstash_nofile: 16384
 #
 # paths
