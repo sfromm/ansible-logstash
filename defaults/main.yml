@@ -26,6 +26,7 @@ logstash_filters: |-
     }
 logstash_outputs: |-
     elasticsearch {
-      host => "localhost"
+      hosts => ["http://localhost"]
+      cluster => "logstash"
     }
 logstash_patterns: [ ]
