@@ -1,0 +1,4 @@
+# {{ ansible_managed }}
+# logstash dictionary for {{ item.name }}
+
+{{ item.dictionary | to_nice_yaml }}

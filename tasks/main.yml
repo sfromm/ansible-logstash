@@ -28,16 +28,38 @@
     - { rank: 30, name: filters.conf }
     - { rank: 50, name: outputs.conf }
 
+- name: create local configuration paths
+  file: >-
+    path={{ item }}
+    state=directory
+    mode=0755
+    owner=root
+    group=root
+  with_items:
+    - "{{ logstash_path_settings }}/dictionaries"
+    - "{{ logstash_path_settings }}/patterns"
+
 - name: template logstash patterns
   template: >-
     src=pattern.j2
-    dest={{ logstash_path_home }}/patterns/{{ item.name }}
+    dest={{ logstash_path_settings }}/patterns/{{ item.name }}
     owner=root
     group=root
     mode=0644
     backup=yes
   notify: restart logstash
   with_items: "{{ logstash_patterns }}"
+
+- name: template logstash dictionaries
+  template: >-
+    src=dictionary.j2
+    dest={{ logstash_path_settings }}/dictionaries/{{ item.name }}
+    owner=root
+    group=root
+    mode=0644
+    backup=yes
+  notify: restart logstash
+  with_items: "{{ logstash_dictionaries }}"
 
 - name: enable and start logstash
   service: name=logstash enabled=yes state=started
