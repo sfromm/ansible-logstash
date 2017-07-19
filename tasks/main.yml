@@ -53,7 +53,7 @@
 - name: template logstash dictionaries
   template: >-
     src=dictionary.j2
-    dest={{ logstash_path_settings }}/dictionaries/{{ item.name }}
+    dest={{ logstash_path_settings }}/dictionaries/{{ item.name }}.yml
     owner=root
     group=root
     mode=0644
