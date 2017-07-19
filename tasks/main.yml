@@ -38,6 +38,7 @@
   with_items:
     - "{{ logstash_path_settings }}/dictionaries"
     - "{{ logstash_path_settings }}/patterns"
+    - "{{ logstash_path_settings }}/templates"
 
 - name: template logstash patterns
   template: >-
@@ -60,6 +61,17 @@
     backup=yes
   notify: restart logstash
   with_items: "{{ logstash_dictionaries }}"
+
+- name: template logstash templates
+  template: >-
+    src=template.j2
+    dest={{ logstash_path_settings }}/templates/{{ item.name }}.json
+    owner=root
+    group=root
+    mode=0644
+    backup=yes
+  notify: restart logstash
+  with_items: "{{ logstash_templates }}"
 
 - name: enable and start logstash
   service: name=logstash enabled=yes state=started

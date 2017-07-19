@@ -31,6 +31,7 @@ logstash_outputs: |-
       cluster => "logstash"
     }
 logstash_patterns: [ ]
+logstash_templates: [ ]
 logstash_dictionaries:
   - name: protocols
     dictionary:
